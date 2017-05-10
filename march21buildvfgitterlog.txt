@@ -1,0 +1,779 @@
+Brent Shambaugh
+@bshambaugh
+Mar 21 14:17 
+@bhaugen Yes, I know about Gojs. I like them too. I'd probably go for sigma.js a step beyond color coding D3 graphs by namespace as its free, and it is good enough for me, and hopefully others, at the moment. There are a lot of visualization libraries out there, and I am not wanting to compete with them at the moment. I'm enticed by open question answering on the semantic web to make web data more easily searchable (not a domain ontology, not a closed KB, but heterogeneous data) There aren't many doing that in the open domain from what I see, and I envision it could be useful for networks of networks, or as I see it many LDP servers, related semantic data and perhaps documents. Miriam Fernandez and Vanessa Lopez looked into this, as late as five years ago, at the Knowledge Media Institute, and were pioneers.
+Bob Haugen
+@bhaugen
+Mar 21 14:19 
+OOps, gojs not free? I got transfixed by the diagrams and then got involved in a side conversation before I found the source.
+Brent Shambaugh
+@bshambaugh
+Mar 21 14:19 
+hmm...http://gojs.net/latest/doc/download.html
+Bob Haugen
+@bhaugen
+Mar 21 14:21 
+Nope, you were right the first time: https://www.nwoods.com/sales/index.html
+too bad, looked like good stuff.
+Brent Shambaugh
+@bshambaugh
+Mar 21 14:21 
+yeah I know. I felt the same way.
+Bob Haugen
+@bhaugen
+Mar 21 14:22 
+oh well...
+Brent Shambaugh
+@bshambaugh
+Mar 21 14:22 
+If I had people paying me money for a product that totally could be an option
+but alas...it is like dominoes
+Brent Shambaugh
+@bshambaugh
+Mar 21 14:31 
+
+Lynn Foster
+@fosterlynn
+Mar 21 14:31 
+wow 
+
+
+Brent Shambaugh
+@bshambaugh
+Mar 21 14:32
+Sigma.js has zooming, nooverlap detection (to avoid overlap of labels), customization of nodes...etc...It uses code from the Gephi project.
+https://gephi.org/
+I recall Gephi has an RDF plugin.
+...the plugin was created by Dr. Fabian Gandon.
+http://www-sop.inria.fr/members/Fabien.Gandon/
+Bob Haugen
+@bhaugen
+Mar 21 14:42
+
+    Sigma.js has zooming, nooverlap detection (to avoid overlap of labels), customization of nodes...etc...It uses code from the Gephi project.
+
+Nice!
+Brent Shambaugh
+@bshambaugh
+Mar 21 15:05
+VOWL looks pretty nice. If I were to replicate that I would have to write code to match the styling to the underlying data. (http://vowl.visualdataweb.org/v2/) As it is my code is quite simple. (it is a obvious modification of this: https://bl.ocks.org/mbostock/4062045). It adds node and edge labels. It uses ellipses instead of circles. It adds collision detection. There is only one color defined by the group , and the object I input to d3 looks like this (except for two main substitutions):
+{"links":[{"source":"http://localhost/node-arc-p5/data/Food-Growing-Methods.ttl","target":"\"Food Growing Methods\"","value":1,"label":"http://purl.org/dc/terms/title"},{"source":"http://localhost/node-arc-p5/data/Food-Growing-Methods.ttl","target":"\"For independence and resource optimization, some or all of the astronauts diet must be grown in-situ. Various forms have been proposed, from greenhouses to hydroponics, but there must also be optimization in the types of food grown to maximize caloric and nutrient output compared to water and energy input.\"","value":1,"label":"http://www.w3.org/2000/01/rdf-schema#comment"},{"source":"http://localhost/node-arc-p5/data/Food-Growing-Methods.ttl","target":"\"0.0(investment cost pulled from children pages)\"","value":1,"label":"http://data.thespaceplan.com/ontologies/lsi#averageEstInvestmentCost"},{"source":"http://localhost/node-arc-p5/data/Food-Growing-Methods.ttl","target":"\"0.0 (time to maturity pulled from children pages)\"","value":1,"label":"http://data.thespaceplan.com/ontologies/lsi#averageEstTimetoMaturity"},{"source":"http://localhost/node-arc-p5/data/Food-Growing-Methods.ttl","target":"\"Research\"","value":1,"label":"http://data.thespaceplan.com/ontologies/lsi#commercialStatus"},{"source":"http://localhost/node-arc-p5/data/Food-Growing-Methods.ttl","target":"\"Health and Medicine\"","value":1,"label":"http://data.thespaceplan.com/ontologies/lsi#relatedIndustriesFields"},{"source":"http://localhost/node-arc-p5/data/Food-Growing-Methods.ttl","target":"http://investors.ddns.net:8080/marmotta/ldp/waypaver-lsi/biological-support","value":1,"label":"http://data.thespaceplan.com/ontologies/lsi#label"},{"source":"http://localhost/node-arc-p5/data/Food-Growing-Methods.ttl","target":"http://investors.ddns.net:8080/marmotta/ldp/waypaver-lsi/habitation-infrastructure","value":1,"label":"http://data.thespaceplan.com/ontologies/lsi#label"}],"nodes":[{"id":"\"0.0 (time to maturity pulled from children pages)\"","group":1},{"id":"\"0.0(investment cost pulled from children pages)\"","group":1},{"id":"\"Food Growing Methods\"","group":1},{"id":"\"For independence and resource optimization, some or all of the astronauts diet must be grown in-situ. Various forms have been proposed, from greenhouses to hydroponics, but there must also be optimization in the types of food grown to maximize caloric and nutrient output compared to water and energy input.\"","group":1},{"id":"\"Health and Medicine\"","group":1},{"id":"\"Research\"","group":1},{"id":"http://investors.ddns.net:8080/marmotta/ldp/waypaver-lsi/biological-support","group":1},{"id":"http://investors.ddns.net:8080/marmotta/ldp/waypaver-lsi/habitation-infrastructure","group":1},{"id":"http://localhost/node-arc-p5/data/Food-Growing-Methods.ttl","group":1}]}
+I shorten things beginning with http to curies. I shorten strings longer than 30 characters.
+forceCollidefitnodelabels.png
+Lynn Foster
+@fosterlynn
+Mar 21 15:11
+in yours can a person move around the ovals? and will they stay put?
+Brent Shambaugh
+@bshambaugh
+Mar 21 15:12
+They move.
+Lynn Foster
+@fosterlynn
+Mar 21 15:14
+should i try it on our ttl file?
+(I'm fine with webvowl too, but right now i can't get it to work - probably my error somewhere, although the ttl validates in a couple of tools)
+Brent Shambaugh
+@bshambaugh
+Mar 21 15:15
+If you want. git clone https://github.com/bshambaugh/node-arc-d3.git
+Modify d3sketch.js url variable to be:
+var url = "path to what you have got"; in https://github.com/bshambaugh/node-arc-d3/blob/master/js/d3sketch.js
+do this where you want to serve it
+it is easy to cd to /var/www/html , git clone https://github.com/bshambaugh/node-arc-d3.git and then localhost/node-arc-d3 in the browser
+Lynn Foster
+@fosterlynn
+Mar 21 15:17
+thanks, i'll try it later actually, i said i would work on the agent doc, so i better get going on that
+Brent Shambaugh
+@bshambaugh
+Mar 21 15:17
+yeah....too little time :grinning:
+Lynn Foster
+@fosterlynn
+Mar 21 15:17
+:grinning:
+Bob Haugen
+@bhaugen
+Mar 21 15:20
+@fosterlynn I saved @bshambaugh 's instructions so they don't scroll off into the ether
+Lynn Foster
+@fosterlynn
+Mar 21 15:20
+:thumbsup: thanks
+Brent Shambaugh
+@bshambaugh
+Mar 21 16:08
+With node and npm installed:
+git clone https://github.com/VisualDataWeb/WebVOWL.git
+sudo su
+npm install
+npm install grunt-cli -g
+grunt webserver
+webvowl.png
+Brent Shambaugh
+@bshambaugh
+Mar 21 16:31
+loading https://github.com/valueflows/valueflows/blob/master/release-doc-in-process/all_vf.TTL gives:
+loadiri.png
+Trying local all_vf.TTL
+Lynn Foster
+@fosterlynn
+Mar 21 16:34
+thanks! i hope you get farther than me!
+i even cut it down to one class, still couldn't get it to load
+although i haven't gotten that exact error
+Brent Shambaugh
+@bshambaugh
+Mar 21 16:37
+Ontology could not be loaded.
+Is it a valid OWL ontology? Please check with OWL Validator.
+
+OWL 2 Validation Report
+Summary
+
+The ontology and all of its imports are in the OWL 2 profile
+Imports Closure
+Ontology IRI Physical URI
+OntologyID(OntologyIRI(https://w3id.org/valueflows/))
+Lynn Foster
+@fosterlynn
+Mar 21 16:38
+maybe you can find a bug - i get it clean in the validator, and also in the validation stuff that Kalin did
+Brent Shambaugh
+@bshambaugh
+Mar 21 16:38
+:stuck_out_tongue: ... does it like .owl extensions?
+Lynn Foster
+@fosterlynn
+Mar 21 16:39
+huh?
+i've done .ttl files successfully before
+(but not lately)
+i was wondering it it was something with the w3id.org/valueflows not really giving data at the right iri's
+but i think we did it that way before
+Brent Shambaugh
+@bshambaugh
+Mar 21 16:46
+
+It even fails loading this:
+
+@prefix schema: http://schema.org/ .
+@prefix rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns# .
+@prefix owl: http://www.w3.org/2002/07/owl# .
+@prefix skos: http://www.w3.org/2004/02/skos/core# .
+@prefix rdfs: http://www.w3.org/2000/01/rdf-schema# .
+@prefix foaf: http://xmlns.com/foaf/0.1/# .
+@prefix dcterms: http://purl.org/dc/terms/ .
+
+vf:Action a owl:Class ;
+rdfs:label "vf:Action" ;
+rdfs:subClassOf rdf:Property .
+
+vf:TaxonomyItem a owl:Class ;
+rdfs:label "vf:TaxonomyItem" .
+
+vf:ResourceTaxonomyItem a owl:Class ;
+rdfs:label "vf:ResourceTaxonomyItem" ;
+rdfs:subClassOf vf:TaxonomyItem .
+
+vf:ProcessTaxonomyItem a owl:Class ;
+rdfs:label "vf:ProcessTaxonomyItem" ;
+rdfs:subClassOf vf:TaxonomyItem .
+
+vf:ExchangeTaxonomyItem a owl:Class ;
+rdfs:label "vf:ExchangeTaxonomyItem" ;
+rdfs:subClassOf vf:TaxonomyItem .
+Lynn Foster
+@fosterlynn
+Mar 21 16:47
+yeah, i took it down to one class, no luck
+it worked for @djodjoni though, before I started messing with his .ttl file :disappointed:
+at least i'm pretty sure, because he had a diagram
+Brent Shambaugh
+@bshambaugh
+Mar 21 16:48
+The uploader thing works?
+for other .ttl files?
+Lynn Foster
+@fosterlynn
+Mar 21 16:48
+well, i tried an old .ttl file that used to work some months ago, and it didn't load
+but it does load the foaf example
+i tried both the visualizer and the upload
+Brent Shambaugh
+@bshambaugh
+Mar 21 17:21
+In /js/webvowl.app.js 624:8 of /js/webvowl.app.js : var classCount = parseInt(data.metrics.classCount);
+data.metrics is undefined
+I tried loading from the upload and dropping the file in /WebVOWL/src/app/data/
+Lynn Foster
+@fosterlynn
+Mar 21 17:22
+thanks for trying!
+Brent Shambaugh
+@bshambaugh
+Mar 21 17:22
+and /WebVOWL/deploy/data
+I first converted from .ttl to .nt http://www.l3s.de/~minack/rdf2rdf/
+Lynn Foster
+@fosterlynn
+Mar 21 17:23
+well i guess it is good to know it is not just me / my machine / whatever
+ah
+Brent Shambaugh
+@bshambaugh
+Mar 21 17:24
+then dropped the .nt into http://rdf-translator.appspot.com/ to convert to json-ld
+I wasn't sure that extension to give it, so I just chose .json
+Lynn Foster
+@fosterlynn
+Mar 21 17:24
+don't know
+Brent Shambaugh
+@bshambaugh
+Mar 21 17:25
+as json-ld was designed to work with json parsers (from memory on conference call with Manu Sporny)
+Lynn Foster
+@fosterlynn
+Mar 21 17:25
+i should go back and try converting with whatever Kalin was using and then loading in webvowl
+(but not today unfortunately)
+thanks for trying all this stuff @bshambaugh !!
+or keep trucking to pick a new visualizer
+or try yours :blush:
+Brent Shambaugh
+@bshambaugh
+Mar 21 17:31
+thanks. data = data || {}; means it loads the data or an empty object if there is nothing in data (no file loaded?). Just for fun try calling the .metrics method? on .data. If that fails, then data needs to be defined (meaning no file loaded) ...
+Expects JSON?
+if (validJSON===false){
+// the server output is not a valid json file
+console.log("Retrieved data is not valid! (JSON.parse Error)");
+ontologyMenu.emptyGraphError();
+return;
+}
+function setLoadingStatus(success, description, information) {
+loadingError.classed("hidden", success);
+
+        var errorInfo = d3.select("#error-info");
+        if (information) {
+            errorInfo.text(information);
+        } else {
+            errorInfo.html("Ontology could not be loaded.<br>Is it a valid OWL ontology? Please check with <a target=\"_blank\"" +
+            "href=\"http://visualdataweb.de/validator/\">OWL Validator</a>.");
+        }
+
+        var descriptionMissing = !description;
+        var descriptionVisible = d3.select("#error-description-button").classed("hidden", descriptionMissing).datum().open;
+        d3.select("#error-description-container").classed("hidden", descriptionMissing || !descriptionVisible);
+        d3.select("#error-description").text(unescape(description));
+    }
+
+function loadOntologyFromText(jsonText, filename, alternativeFilename) {
+pauseMenu.reset();
+
+        if (jsonText===undefined && filename===undefined){
+            console.log("Nothing to load");
+            return;
+        }
+
+        var data;
+        if (jsonText) {
+            // validate JSON FILE
+            var validJSON;
+            try {
+                data =JSON.parse(jsonText);
+                validJSON=true;
+            } catch (e){
+                validJSON=false;
+            }
+            if (validJSON===false){
+                // the server output is not a valid json file
+                console.log("Retrieved data is not valid! (JSON.parse Error)");
+                ontologyMenu.emptyGraphError();
+                return;
+            }
+
+            if (!filename) {
+                // First look if an ontology title exists, otherwise take the alternative filename
+                var ontologyNames = data.header ? data.header.title : undefined;
+                var ontologyName = languageTools.textInLanguage(ontologyNames);
+
+                if (ontologyName) {
+                    filename = ontologyName;
+                } else {
+                    filename = alternativeFilename;
+                }
+            }
+        }
+
+Brent Shambaugh
+@bshambaugh
+Mar 21 17:37
+function loadOntologyFromUri(relativePath, requestedUri) {
+fileToLoad=requestedUri;
+var cachedOntology = cachedConversions[relativePath];
+var trimmedRequestedUri = requestedUri.replace(/\/$/g, "");
+var filename = trimmedRequestedUri.slice(trimmedRequestedUri.lastIndexOf("/") + 1);
+
+        if (cachedOntology) {
+            loadOntologyFromText(cachedOntology, undefined, filename);
+            setLoadingStatus(true);
+        } else {
+            displayLoadingIndicators();
+            d3.xhr(relativePath, "application/json", function (error, request) {
+                var loadingSuccessful = !error;
+                var errorInfo;
+                if (error!==null && error.status === 500) {
+                    hideLoadingInformations();
+                     ontologyMenu.emptyGraphError();
+                     return;
+                 }
+
+
+
+                var jsonText;
+                if (loadingSuccessful) {
+                    jsonText = request.responseText;
+                    cachedConversions[relativePath] = jsonText;
+                } else {
+                    if (error.status === 404) {
+                        // check if this is file related and not owl2vowl converter connection error
+                        // IRI parameter
+                        var iriKey = "iri=";
+                        var urlKey = "url=";
+                        var fileKey = "file=";
+
+                        var hashParameter = location.hash.slice(1);
+                        if (hashParameter.substr(0, fileKey.length) !== fileKey &&
+                            hashParameter.substr(0, urlKey.length) !== urlKey &&
+                            hashParameter.substr(0, iriKey.length) !== iriKey) {
+                            // this is a file related error
+                            ontologyMenu.emptyGraphError();
+                        }
+                        errorInfo = "Connection to the OWL2VOWL interface could not be established.";
+                        graph.clearGraphData();
+                    }
+                }
+
+                loadOntologyFromText(jsonText, undefined, filename);
+                setLoadingStatus(loadingSuccessful, error ? error.response : undefined, errorInfo);
+
+                if (emptyGraph===true){
+                    ontologyMenu.emptyGraphError();
+                    graph.clearGraphData();
+                }
+                hideLoadingInformations();
+            });
+        }
+    }
+
+set loading status is triggered in the last part...
+to an error
+in /js/webvowl.app.js
+
+
+Brent Shambaugh
+@bshambaugh
+Mar 21 17:44
+git clone https://github.com/VisualDataWeb/OWL2VOWL
+referencing https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
+mvn install
+bunch of magic happens (OWL2VOWL may magically parse and serialize the owl ontologies to a format WebVOWL likes, as it does not appear to work out of the box with standard serializations)
+Lynn Foster
+@fosterlynn
+Mar 21 17:51
+hmmm the magic part, huh? :grinning:
+@bshambaugh i really appreciate you digging into this!
+Brent Shambaugh
+@bshambaugh
+Mar 21 17:54
+INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ OWL2VOWL ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 4 resources
+[INFO] Copying 1 resource
+[INFO]
+[INFO] --- maven-compiler-plugin:3.3:compile (default-compile) @ OWL2VOWL ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 96 source files to /home/brent/Downloads/OWL2VOWL/target/classes
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 7:39.121s
+[INFO] Finished at: Tue Mar 21 17:52:54 CDT 2017
+[INFO] Final Memory: 18M/71M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.3:compile (default-compile) on project OWL2VOWL: Fatal error compiling: invalid target release: 1.8 -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+[INFO] Compiling 96 source files to /home/brent/Downloads/OWL2VOWL/target/classes
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 10.773s
+[INFO] Finished at: Tue Mar 21 17:56:18 CDT 2017
+[INFO] Final Memory: 21M/163M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.3:compile (default-compile) on project OWL2VOWL: Fatal error compiling: invalid target release: 1.8 -> [Help 1]
+org.apache.maven.lifecycle.LifecycleExecutionException: Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.3:compile (default-compile) on project OWL2VOWL: Fatal error compiling
+at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:217)
+at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:153)
+at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:145)
+at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:84)
+at org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(LifecycleModuleBuilder.java:59)
+at org.apache.maven.lifecycle.internal.LifecycleStarter.singleThreadedBuild(LifecycleStarter.java:183)
+at org.apache.maven.lifecycle.internal.LifecycleStarter.execute(LifecycleStarter.java:161)
+at org.apache.maven.DefaultMaven.doExecute(DefaultMaven.java:320)
+at org.apache.maven.DefaultMaven.execute(DefaultMaven.java:156)
+at org.apache.maven.cli.MavenCli.execute(MavenCli.java:537)
+at org.apache.maven.cli.MavenCli.doMain(MavenCli.java:196)
+at org.apache.maven.cli.MavenCli.main(MavenCli.java:141)
+at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.lang.reflect.Method.invoke(Method.java:606)
+at org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced(Launcher.java:289)
+at org.codehaus.plexus.classworlds.launcher.Launcher.launch(Launcher.java:229)
+at org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode(Launcher.java:415)
+at org.codehaus.plexus.classworlds.launcher.Launcher.main(Launcher.java:356)
+Caused by: org.apache.maven.plugin.MojoExecutionException: Fatal error compiling
+at org.apache.maven.plugin.compiler.AbstractCompilerMojo.execute(AbstractCompilerMojo.java:836)
+at org.apache.maven.plugin.compiler.CompilerMojo.execute(CompilerMojo.java:129)
+at org.apache.maven.plugin.DefaultBuildPluginManager.executeMojo(DefaultBuildPluginManager.java:101)
+at org.apache.maven.lifecycle.internal.MojoExecutor.execute(MojoExecutor.java:209)
+... 19 more
+Caused by: org.codehaus.plexus.compiler.CompilerException: invalid target release: 1.8
+at org.codehaus.plexus.compiler.javac.JavaxToolsCompiler.compileInProcess(JavaxToolsCompiler.java:172)
+at org.codehaus.plexus.compiler.javac.JavacCompiler.performCompile(JavacCompiler.java:169)
+at org.apache.maven.plugin.compiler.AbstractCompilerMojo.execute(AbstractCompilerMojo.java:825)
+... 22 more
+Caused by: java.lang.IllegalArgumentException: invalid target release: 1.8
+at com.sun.tools.javac.main.RecognizedOptions$GrumpyHelper.error(RecognizedOptions.java:88)
+at com.sun.tools.javac.main.RecognizedOptions$10.process(RecognizedOptions.java:359)
+at com.sun.tools.javac.api.JavacTool.processOptions(JavacTool.java:242)
+at com.sun.tools.javac.api.JavacTool.getTask(JavacTool.java:199)
+at com.sun.tools.javac.api.JavacTool.getTask(JavacTool.java:68)
+at org.codehaus.plexus.compiler.javac.JavaxToolsCompiler.compileInProcess(JavaxToolsCompiler.java:123)
+... 24 more
+[ERROR]
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+searching for pre-compiled builds
+ahhh...
+
+Build the jar
+
+To build the jar file, simply execute mvn package. The built jar only contains the compiled source code. To build a jar file that can be executed standalone, you have to use the package option with parameter: mvn package -Denv=standalone or mvn package -P standalone-release. This will build the file owl2vowl.jar containing all dependencies needed to be executable. There will also be a zip file created containing the owl2vowl.jar, README and the license files.
+Brent Shambaugh
+@bshambaugh
+Mar 21 18:01
+meh...It could be on my side: http://stackoverflow.com/questions/28291691/fatal-error-compiling-invalid-target-release-1-8-help-1
+Lynn Foster
+@fosterlynn
+Mar 21 18:02
+Brent, don't go outside your timebox! I feel guilty.
+Brent Shambaugh
+@bshambaugh
+Mar 21 18:09
+edit: pom.xml : change version 1.8 to 1.7 ... It may break but not doing Java upgrade
+cheating does not work...need to compile https://github.com/VisualDataWeb/OWL2VOWL on a machine with Java 1.8
+Use the resulting owl2vowl.jar as follows: java -jar owl2vowl.jar -file all_vf.ttl
+feed the result to WebVOWL
+Lynn Foster
+@fosterlynn
+Mar 21 18:13
+wow
+thanks for the digging!
+Brent Shambaugh
+@bshambaugh
+Mar 21 18:46
+Trying Java version 1.8
+sudo apt-get install maven (now on new machine, so I need to install it)
+Brent Shambaugh
+@bshambaugh
+Mar 21 18:52
+done...running: mvn package -Denv=standalone
+fyi: JAVA_HOME env not set
+Brent Shambaugh
+@bshambaugh
+Mar 21 19:00
+it seems I am downloading the web..
+just a lot of stuff at repo.spring.io
+8 minutes so far...fun
+They surely did not think about the low bandwidth people, did they?
+By the way. maven is a build engine (or whatever they call it) . It uses pom.xml to point to things.
+the analog I see in JavaScript is npm install
+oops...I need a compiler for JAVA:
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 96 source files to /home/brent/Downloads/OWL2VOWL/target/classes
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR :
+[INFO] -------------------------------------------------------------
+[ERROR] No compiler is provided in this environment. Perhaps you are running on a JRE rather than a JDK?
+[INFO] 1 error
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 10:42 min
+[INFO] Finished at: 2017-03-21T20:03:33-04:00
+[INFO] Final Memory: 22M/124M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.3:compile (default-compile) on project OWL2VOWL: Compilation failure
+[ERROR] No compiler is provided in this environment. Perhaps you are running on a JRE rather than a JDK?
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+Brent Shambaugh
+@bshambaugh
+
+Brent Shambaugh
+@bshambaugh
+Mar 21 19:05 
+oops...I need a compiler for JAVA:
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 96 source files to /home/brent/Downloads/OWL2VOWL/target/classes
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR :
+[INFO] -------------------------------------------------------------
+[ERROR] No compiler is provided in this environment. Perhaps you are running on a JRE rather than a JDK?
+[INFO] 1 error
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 10:42 min
+[INFO] Finished at: 2017-03-21T20:03:33-04:00
+[INFO] Final Memory: 22M/124M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.3:compile (default-compile) on project OWL2VOWL: Compilation failure
+[ERROR] No compiler is provided in this environment. Perhaps you are running on a JRE rather than a JDK?
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+ok...sudo synaptic (my favorite index to go for new programs I don't presently have)
+synaptic package manager could not fetch JRE
+Brent Shambaugh
+@bshambaugh
+Mar 21 19:10 
+checking online
+http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
+Lynn Foster
+@fosterlynn
+Mar 21 19:11 
+so Brent, what if you get this all working on your machine..... doesn't sound that repeatable..... 
+you'll be on call to make vowl diagrams, better be careful :)
+Brent Shambaugh
+@bshambaugh
+Mar 21 19:12 
+ehh...sure it is...I am just using logging verbose
+I'll put the compiled OWL2VOWL out there if I succeed
+Lynn Foster
+@fosterlynn
+Mar 21 19:13 
+ha ok
+Brent Shambaugh
+@bshambaugh
+Mar 21 19:24 
+wrong link, it should be JDK http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+using x64 version since my machine is x86_64 (per uname -m)
+credit this guy: https://www.howtogeek.com/198615/how-to-check-if-your-linux-system-is-32-bit-or-64-bit/
+Lynn Foster
+@fosterlynn
+Mar 21 19:28 
+that was some useful verbose logging :)
+ok i need to get away from the screen for the evening..... i'll check in the morning for whatever level of logging you continue with :)
+Brent Shambaugh
+@bshambaugh
+Mar 21 19:46 
+md5sum on the downloaded .tar.gz file...it checks
+studying how to install JDK from the cli: https://www3.ntu.edu.sg/home/ehchua/programming/howto/JDK_Howto.html
+lots of config...backtracking and trying with apt-get: sudo apt-get install openjdk-8-jdk-headless
+Brent Shambaugh
+@bshambaugh
+Mar 21 19:52 
+meh...synaptic is kind of a front end for apt-get? Err:1 http://security.ubuntu.com/ubuntu xenial-security/main amd64 openjdk-8-jdk-headless amd64 8u111-b14-2ubuntu0.16.04.2
+404 Not Found [IP: 91.189.91.26 80]
+Ign:2 http://security.ubuntu.com/ubuntu xenial-security/main amd64 openjdk-8-jdk amd64 8u111-b14-2ubuntu0.16.04.2
+Err:1 http://security.ubuntu.com/ubuntu xenial-security/main amd64 openjdk-8-jdk-headless amd64 8u111-b14-2ubuntu0.16.04.2
+404 Not Found [IP: 91.189.91.26 80]
+Err:2 http://security.ubuntu.com/ubuntu xenial-security/main amd64 openjdk-8-jdk amd64 8u111-b14-2ubuntu0.16.04.2
+404 Not Found [IP: 91.189.91.26 80]
+E: Failed to fetch http://security.ubuntu.com/ubuntu/pool/main/o/openjdk-8/openjdk-8-jdk-headless_8u111-b14-2ubuntu0.16.04.2_amd64.deb 404 Not Found [IP: 91.189.91.26 80]
+E: Failed to fetch http://security.ubuntu.com/ubuntu/pool/main/o/openjdk-8/openjdk-8-jdk_8u111-b14-2ubuntu0.16.04.2_amd64.deb 404 Not Found [IP: 91.189.91.26 80]
+E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
+brent@brent-Inspiron-1525:~/Downloads$ 
+ahh...so the manual mode (downloaded file is the one)
+Brent Shambaugh
+@bshambaugh
+Mar 21 20:00 
+It looks like it might run..I just need to point maven to it (http://stackoverflow.com/questions/2503658/specify-jdk-for-maven-to-use)
+I tried: export JAVA_HOME='/home/brent/Downloads/jdk1.8.0_121' in the cli console window I was using maven in and it did not complain that JAVA_HOME was not set
+Brent Shambaugh
+@bshambaugh
+Mar 21 20:07 
+INFO] Reading assembly descriptor: src/assembly/jar-with-dependencies.xml
+[INFO] Reading assembly descriptor: src/assembly/release_version.xml
+[INFO] Building jar: /home/brent/Downloads/OWL2VOWL/target/owl2vowl.jar
+[WARNING] Configuration options: 'appendAssemblyId' is set to false, and 'classifier' is missing.
+Instead of attaching the assembly file: /home/brent/Downloads/OWL2VOWL/target/owl2vowl.jar, it will become the file for main project artifact.
+NOTE: If multiple descriptors or descriptor-formats are provided for this project, the value of this file will be non-deterministic!
+[WARNING] Replacing pre-existing project main-artifact file: /home/brent/Downloads/OWL2VOWL/target/OWL2VOWL-0.3.0.jar
+with assembly file: /home/brent/Downloads/OWL2VOWL/target/owl2vowl.jar
+[WARNING] The assembly descriptor contains a filesystem-root relative reference, which is not cross platform compatible /
+[WARNING] The assembly descriptor contains a filesystem-root relative reference, which is not cross platform compatible /
+[INFO] Building zip: /home/brent/Downloads/OWL2VOWL/target/owl2vowl.zip
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 02:52 min
+[INFO] Finished at: 2017-03-21T21:06:23-04:00
+[INFO] Final Memory: 141M/301M
+[INFO] ------------------------------------------------------------------------
+Trying to push the build to my github fork of owl2vowl:
+git add --all *
+The following paths are ignored by one of your .gitignore files:
+owl2vowl_logs
+target
+Use -f if you really want to add them.
+so try: git add --all -f *
+git commit -m "Added the owl2vowl_logs and target to make the build publically available, and for online access"
+Brent Shambaugh
+@bshambaugh
+Mar 21 20:12 
+git push -u origin master
+may be at: https://github.com/bshambaugh/OWL2VOWL/tree/master/src
+Brent Shambaugh
+@bshambaugh
+Mar 21 20:24 
+24.46 MB later it is at: https://github.com/bshambaugh/OWL2VOWL/tree/master/target
+download owl2vowl.jar and pray
+elf Pavlik
+@elf-pavlik
+Mar 21 20:35 
+@fosterlynn I didn't get what issue you have with VOWL? for example this version of .ttl works http://visualdataweb.de/webvowl/#iri=https://raw.githubusercontent.com/valueflows/valueflows/82b624f491b1151737899023b2708478cc0ac99e/release-doc-in-process/all_vf.TTL
+.ttl from current master also works http://visualdataweb.de/webvowl/#iri=https://raw.githubusercontent.com/valueflows/valueflows/master/release-doc-in-process/all_vf.TTL
+Brent Shambaugh
+@bshambaugh
+Mar 21 21:10 
+This worked for me: https://github.com/bshambaugh/ovn/blob/master/release-doc-in-process/all_vf.json (created from owl2vowl)
+it yields:
+
+Brent Shambaugh
+@bshambaugh
+Mar 21 21:17 
+
+I guess .svg files do not display in gitter? Double clicking asks me if I want to open it.
+Lynn Foster
+@fosterlynn
+Mar 22 07:59 
+http://vowl.visualdataweb.org/webvowl/#iri=https://raw.githubusercontent.com/valueflows/valueflows/master/release-doc-in-process/all_vf.TTL is what I was doing, which is still not working for me.
+Noting the difference in the first part of the url, hmmm. @elf-pavlik your links both work for me! So looks like I was doing this in the wrong place. :(
+Sorry @bshambaugh !!!
+aha, mine is an older beta version, probably got that link from awhile ago -- sorry everyone!!
+Lynn Foster
+@fosterlynn
+Mar 22 10:46 
+@bshambaugh P.S. I owe you!
+Kalin Maldzhanski
+@djodjoni
+Mar 22 12:03 
+would you like a PR with a jar and script to run it. to perform and check if all transformations are ok ?
+Kalin Maldzhanski
+@djodjoni
+Mar 22 12:14 
+btw just qurious is there any specific reason why codeship is used ?
+elf Pavlik
+@elf-pavlik
+Mar 22 12:15 
+where ?
+Kalin Maldzhanski
+@djodjoni
+Mar 22 12:16 
+valueflows repo?
+Kalin Maldzhanski
+@djodjoni
+Mar 22 12:27 
+the reason why I am asking is to setup this vocab checks and those automatic conversions including vowl json s they can be done on PR 
+will save some time considering the issues @fosterlynn had recently
+Lynn Foster
+@fosterlynn
+Mar 22 12:44 
+would you like a PR with a jar and script to run it. to perform and check if all transformations are ok ?
+sure, if it isn't too hard
+but also, it would be just a warning, true? and wouldn't automatically generate the .png file?
+Kalin Maldzhanski
+@djodjoni
+Mar 22 13:39 
+it could generate all(various rdf formats and vowl json), and I personally would but the png as it may(most probably) look not that nice 
+Lynn Foster
+@fosterlynn
+Mar 22 13:39 
+yeah that was my worry about the png
+need to move it around a bit manually
+Kalin Maldzhanski
+@djodjoni
+Mar 22 13:40 
+yep exactly
+elf Pavlik
+@elf-pavlik
+Mar 22 13:40 
+i don't think we need all the formats in the repo
+Lynn Foster
+@fosterlynn
+Mar 22 13:41 
+which would you think best @elf-pavlik ?
+and does this make sense to you in general?
+elf Pavlik
+@elf-pavlik
+Mar 22 13:41 
+for vocab definition we can just stick to .ttl
+Lynn Foster
+@fosterlynn
+Mar 22 13:42 
+that is source, not generated
+elf Pavlik
+@elf-pavlik
+Mar 22 13:42 
+i think we only need source in the repo
+Lynn Foster
+@fosterlynn
+Mar 22 13:42 
+would it be good to create a json-ld context?
+ah ok
+elf Pavlik
+@elf-pavlik
+Mar 22 13:42 
+we will need JSON-LD context but it != vocab itself
+Lynn Foster
+@fosterlynn
+Mar 22 13:43 
+no just something useful to have
+but i don't really have an opinion on what to generate - and do want to make sure it is worth the time to do it (vs some other work for @djodjoni )
+when i can't get my ttl to paint in vowl, i need to just fix it anyhow 
+elf Pavlik
+@elf-pavlik
+Mar 22 13:46 
+i usually validate .ttl with https://www.npmjs.com/package/turtle-validator
+online service http://ttl.summerofcode.be/
+Lynn Foster
+@fosterlynn
+Mar 22 13:47 
+i'll give it a try, before it validated, but didn't paint - shouldn't be a problem any more
+bookmarking
+thanks
+
